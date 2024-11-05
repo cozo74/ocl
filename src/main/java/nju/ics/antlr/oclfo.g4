@@ -4,86 +4,94 @@ grammar oclfo;
 
 
 oclBool
-        : oclBool boolOp oclBool
-        | 'not' oclBool
-        | oclSet '->includesAll(' oclSet ')'
-        | oclSet '->excludesAll(' oclSet ')'
-        | oclSet '->includes(' oclSet ')'
-        | oclSet '->excludes(' oclSet ')'
-        | oclSet '->forAll(' varList '|' oclBool ')'
-        | oclSet '->exists(' varList '|' oclBool ')'
-        | oclSet '->isEmpty()'
-        | oclSet '->size()' compOp INT
-        | oclSet '->one(' var '|' oclBool ')'
-        | oclSet '->isUnique(' attr ')'
-        | oclObject '.oclIsKindOf(' class ')'
-        | oclObject '.oclIsTypeOf(' class ')'
-        | oclObject '=' 'null'
-        | oclObject '<>' 'null'
-        | oclNavigation '=' oclNavigation
-        | oclNavigation '<>' oclNavigation
-        | oclValue compOp oclValue
-        | oclObject '.' bAttr
-        | var
+        : oclBool boolOp oclBool                                # OclBoolBoolOp
+        | 'not' oclBool                                         # NotOclBool
+        | oclSet '->includesAll(' oclSet ')'                    # IncludesAll
+        | oclSet '->excludesAll(' oclSet ')'                    # ExcludesAll
+        | oclSet '->includes(' oclSet ')'                       # Includes
+        | oclSet '->excludes(' oclSet ')'                       # Excludes
+        | oclSet '->forAll(' varList '|' oclBool ')'            # ForAll
+        | oclSet '->exists(' varList '|' oclBool ')'            # Exists
+        | oclSet '->isEmpty()'                                  # IsEmpty
+        | oclSet '->size()' compOp INT                          # Size
+        | oclSet '->one(' var '|' oclBool ')'                   # One
+        | oclSet '->isUnique(' attr ')'                         # IsUnique
+        | oclObject '.oclIsKindOf(' class ')'                   # OclIsKindOf
+        | oclObject '.oclIsTypeOf(' class ')'                   # OclIsTypeOf
+        | oclSingle '=' 'null'                                  # OclSingleIsNull
+        | oclSingle '<>' 'null'                                 # OclSingleIsNotNull
+        | oclNavigation '=' oclNavigation                       # NavEqual
+        | oclNavigation '<>' oclNavigation                      # NavNotEqual
+        | oclValue compOp oclValue                              # ValueComp
+        | oclObject '.' bAttr                                   # ObjectBAttr
+        | var                                                   # OclVar
         ;
 
 
 oclNavigation
-        : oclSet
-        | oclSingle
+        : oclSet                                                # Set
+        | oclSingle                                             # Single
         ;
 
 
 oclSet
-        : oclSet '->union(' oclSet ')'
-        | oclSet '->intersection(' oclSet ')'
-        | oclSet '->symmetricDifference(' oclSet ')'
-        | oclSet '-' oclSet
-        | oclSet 'select(' var '|' oclBool ')'
-        | oclSet 'reject(' var '|' oclBool ')'
-        | oclSet '->selectByKind(' class ')'
-        | oclSet '->selectByType(' class ')'
-        | oclSet '.' role '[' role']'
-        | oclSet '.' assoClass '[' role ']'
-        | oclSet '.' nfRole '[' role']'
-        | oclSet '.' nfAssoClass '[' role ']'
-        | oclSet '.' attr
-        | oclObject '.' nfAttr
-        | class '.allInstances()'
-//        | oclSingle
+        : oclSet '->union(' oclSet ')'                          # Union
+        | oclSet '->intersection(' oclSet ')'                   # Intersection
+        | oclSet '->symmetricDifference(' oclSet ')'            # SymmetricDifference
+        | oclSet '-' oclSet                                     # Difference
+        | oclSet 'select(' var '|' oclBool ')'                  # Select
+        | oclSet 'reject(' var '|' oclBool ')'                  # Reject
+        | oclSet '->selectByKind(' class ')'                    # SelectByKind
+        | oclSet '->selectByType(' class ')'                    # SelectByType
+        | oclSet '.' role '[' role']'                           # RoleAndRole
+        | oclSet '.' assoClass '[' role ']'                     # AssoClassAndRole
+        | oclSet '.' nfRole '[' role']'                         # NfRoleAndRole
+        | oclSet '.' nfAssoClass '[' role ']'                   # NfAssoClassAndRole
+        | oclSet '.' attr                                       # AttrOfSet
+        | oclObject '.' nfAttr                                  # NfAttrOfObject
+        | class '.allInstances()'                               # AllInstances
+//        | oclSingle               // indirect left recursion, and oclObject and oclValue are not a set.
         ;
 
 oclSingle
-        : oclObject
-        | oclValue
+        : oclObject                                             # ObjectOfSingle
+        | oclValue                                              # ValueOfSingle
         ;
 
 
 oclObject
-        : oclObject '.oclAsType(' class ')'
-        | oclObject '.' fRole
-        | oclObject '.' fAssoClass
-        | var
-        | 'self'
+        : oclObject '.oclAsType(' class ')'                     # OclAsType
+        | oclObject '.' fRole                                   # FRoleOfObject
+        | oclObject '.' fAssoClass                              # FAssoClassOfObject
+        | var                                                   # ObjectVar
+        | 'self'                                                # Self
         ;
 
 
 oclValue
-        : constant
-        | var
-        | oclObject '.' fAttr
-        | oclSet '->min()'
-        | oclSet '->max()'
+        : constant                                              # ConstantValue
+        | var                                                   # ValueVar
+        | oclObject '.' fAttr                                   # FAttrOfObject
+        | oclSet '->min()'                                      # MinOfSet
+        | oclSet '->max()'                                      # MaxOfSet
         ;
 
 
 boolOp
-        : 'and' | 'or' | 'xor' | 'implies'
+        : 'and'                 # And
+        | 'or'                  # Or
+        | 'xor'                 # Xor
+        | 'implies'             # Implies
         ;
 
 
 compOp
-        : '<' | '<=' | '=' | '>=' | '>' | '<>'
+        : '<'                   # LessThan
+        | '<='                  # LessThanOrEqual
+        | '='                   # Equal
+        | '>='                  # GreaterThanOrEqual
+        | '>'                   # GreaterThan
+        | '<>'                  # NotEqual
         ;
 
 varList
@@ -97,77 +105,34 @@ constant
         | 'false'
         ;
 
-var
-        : ID
-        ;
+var     : ID ;
 
+class   : ID ;
 
-class
-        : ID
-        ;
+assoClass : ID ;
 
+fAssoClass : ID ;
 
+nfAssoClass : ID ;
 
-assoClass
-        : ID
-        ;
+role    : ID ;
 
-fAssoClass
-        : ID
-        ;
+fRole   : ID ;
 
-nfAssoClass
-        : ID
-        ;
+nfRole  : ID ;
 
+attr    : ID ;
 
-role
-        : ID
-        ;
+bAttr   : ID ;
 
+fAttr   : ID ;
 
-fRole
-        : ID
-        ;
+nfAttr  : ID ;
 
-nfRole
-        : ID
-        ;
+INT     : [0-9]+ ;
 
+NEWLINE : [\r\n]+ -> skip ;
 
-attr
-        : ID
-        ;
+WS      : [ \t\n\r]+ -> skip ;
 
-bAttr
-        : ID
-        ;
-
-fAttr
-        : ID
-        ;
-
-
-nfAttr
-        : ID
-        ;
-
-
-INT
-        : [0-9]+
-        ;
-
-
-
-
-NEWLINE
-    : [\r\n]+ -> skip
-    ;
-
-WS
-    : [ \t\n\r]+ -> skip
-    ;
-
-ID
-    : [a-zA-Z$]+ [a-zA-Z0-9_$]*
-    ; // match identifiers
+ID      : [a-zA-Z$]+ [a-zA-Z0-9_$]* ; // match identifiers
