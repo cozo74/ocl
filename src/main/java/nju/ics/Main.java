@@ -38,7 +38,7 @@ public class Main
 
         OCLfoParser parser = new OCLfoParser(tokens);
 
-        ParseTree tree = parser.oclBool();
+        ParseTree tree = parser.invariant();
 
         OCLfoRewriter rewriter = new OCLfoRewriter();
         rewriter.visit(tree);

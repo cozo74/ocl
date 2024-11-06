@@ -3,6 +3,18 @@ package nju.ics.antlr.oclfo;
 public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
 
+
+    @Override
+    public String visitInvExpr(OCLfoParser.InvExprContext ctx) {
+        String className = visit(ctx.class_());
+        String oclBool = visit(ctx.oclBool());
+
+        String result = " context " + className + " inv : " + oclBool + "; ";
+        System.out.println(result);
+        return result;
+    }
+
+
     @Override
     public String visitOclBoolBoolOp(OCLfoParser.OclBoolBoolOpContext ctx) {
         String bool1 = visit(ctx.oclBool(0));
@@ -26,7 +38,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
             default:
                 result =  "error";
         }
-        System.out.println(result);
+//        System.out.println(result);
         return result;
 
     }
@@ -37,7 +49,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
         String bool = visit(ctx.oclBool());
 
         String result = " not " + bool + " ";
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -49,7 +61,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set2 + "->forAll( e2 | not " + set1 + "->forAll(e1 | not e1 = e2 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -61,7 +73,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set2 + "->forAll( e2 | " + set1 + "->forAll(e1 | not e1 = e2 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -73,7 +85,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + set + "->forAll( e | not e = " + single + ") ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -85,7 +97,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set + "->forAll( e | not e = " + single + " ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -98,7 +110,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set + "->forAll(" + varList + " | " + oclBool + " ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -111,7 +123,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + set + "->forAll(" + varList + " | not " + oclBool + " ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -122,7 +134,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set + "->forAll( e | not 1=1 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -133,7 +145,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + set + "->forAll( e | not 1=1 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -174,7 +186,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
                 break;
         }
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -189,7 +201,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + selectSet + "->forAll(e1, e2 | e1=e2 ) and not ( not " + selectSet + "->forAll(e | not 1=1 ) )";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -202,7 +214,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + set + "->forAll(v1, v2 | not v1 = v2 implies not v1." + attr + " = v2." + attr + " ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -216,7 +228,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + className + "->forAll(e | not e = " + v + " ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -229,7 +241,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + className + "->forAll(e | not e = " + v + " ) and Subclass->forAll(e | not e=v) ... ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -241,7 +253,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + single + "->forAll(e | not 1=1 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -253,7 +265,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " not " + single + "->forAll(e | not 1=1 ) ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -273,7 +285,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
             result = " " + nav1 + " = " + nav2 + " ";
         }
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -293,7 +305,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
             result = " not " + nav1 + " = " + nav2 + " ";
         }
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -306,7 +318,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String result = " " + value1 + " " + op + " " + value2 + " ";
 
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -317,7 +329,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
         String bAttr = visit(ctx.bAttr());
 
         String result = " " + obj + "." + bAttr + " ";
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -326,7 +338,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
     public String visitOclVar(OCLfoParser.OclVarContext ctx) {
 
         String result = visit(ctx.var());
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -337,7 +349,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String bool = visit(ctx.oclBool());
         String result = " ( " + bool + " ) ";
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
