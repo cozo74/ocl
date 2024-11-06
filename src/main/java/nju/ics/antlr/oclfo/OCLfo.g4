@@ -43,8 +43,8 @@ oclSet
         | oclSet '->intersection(' oclSet ')'                   # Intersection
         | oclSet '->symmetricDifference(' oclSet ')'            # SymmetricDifference
         | oclSet '-' oclSet                                     # Difference
-        | oclSet 'select(' var '|' oclBool ')'                  # Select
-        | oclSet 'reject(' var '|' oclBool ')'                  # Reject
+        | oclSet '->select(' var '|' oclBool ')'                # Select
+        | oclSet '->reject(' var '|' oclBool ')'                # Reject
         | oclSet '->selectByKind(' class ')'                    # SelectByKind
         | oclSet '->selectByType(' class ')'                    # SelectByType
         | oclSet '.' role '[' role']'                           # RoleAndRole
@@ -99,39 +99,48 @@ compOp
         ;
 
 varList
-        : var (',' var)*
+        : var (',' var)*        # VarListValue
         ;
 
 
-constant
-        : INT
-        | 'true'
-        | 'false'
+constant : ID                  # ConstantID
+         ;
+
+var     : ID                    # VarID
         ;
 
-var     : ID ;
+class   : ID                    # ClassID
+        ;
 
-class   : ID ;
+assoClass : ID                  # AssoClassID
+          ;
 
-assoClass : ID ;
+fAssoClass : ID                 # FAssoClassID
+           ;
 
-fAssoClass : ID ;
+nfAssoClass : ID                # NfAssoClassID
+            ;
 
-nfAssoClass : ID ;
+role    : ID                    # RoleID
+        ;
 
-role    : ID ;
+fRole   : ID                    # FRoleID
+        ;
 
-fRole   : ID ;
+nfRole  : ID                    # NfRoleID
+        ;
 
-nfRole  : ID ;
+attr    : ID                    # AttrID
+        ;
 
-attr    : ID ;
+bAttr   : ID                    # BAttrID
+        ;
 
-bAttr   : ID ;
+fAttr   : ID                    # FAttrID
+        ;
 
-fAttr   : ID ;
-
-nfAttr  : ID ;
+nfAttr  : ID                    # NfAttrID
+        ;
 
 INT     : [0-9]+ ;
 
