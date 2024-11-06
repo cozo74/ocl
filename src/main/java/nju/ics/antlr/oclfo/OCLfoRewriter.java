@@ -1,6 +1,6 @@
 package nju.ics.antlr.oclfo;
 
-public class OCLfoRewrite extends OCLfoBaseVisitor<String>{
+public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
 
     @Override
