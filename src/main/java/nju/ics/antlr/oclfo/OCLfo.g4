@@ -4,6 +4,9 @@ grammar OCLfo;
     package nju.ics.antlr.oclfo;
 }
 
+invariant
+        : 'context' class 'inv' ':' oclBool ';'                 # InvExpr
+        ;
 
 oclBool
         : oclBool boolOp oclBool                                # OclBoolBoolOp
