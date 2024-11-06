@@ -1,6 +1,8 @@
-grammar oclfo;
+grammar OCLfo;
 
-
+@header {
+    package nju.ics.antlr.oclfo;
+}
 
 
 oclBool
@@ -8,11 +10,12 @@ oclBool
         | 'not' oclBool                                         # NotOclBool
         | oclSet '->includesAll(' oclSet ')'                    # IncludesAll
         | oclSet '->excludesAll(' oclSet ')'                    # ExcludesAll
-        | oclSet '->includes(' oclSet ')'                       # Includes
-        | oclSet '->excludes(' oclSet ')'                       # Excludes
+        | oclSet '->includes(' oclSingle ')'                    # Includes
+        | oclSet '->excludes(' oclSingle ')'                    # Excludes
         | oclSet '->forAll(' varList '|' oclBool ')'            # ForAll
         | oclSet '->exists(' varList '|' oclBool ')'            # Exists
         | oclSet '->isEmpty()'                                  # IsEmpty
+        | oclSet '->notEmpty()'                                 # NotEmpty
         | oclSet '->size()' compOp INT                          # Size
         | oclSet '->one(' var '|' oclBool ')'                   # One
         | oclSet '->isUnique(' attr ')'                         # IsUnique
@@ -25,6 +28,7 @@ oclBool
         | oclValue compOp oclValue                              # ValueComp
         | oclObject '.' bAttr                                   # ObjectBAttr
         | var                                                   # OclVar
+        | '(' oclBool ')'                                       # OclBoolParen
         ;
 
 
