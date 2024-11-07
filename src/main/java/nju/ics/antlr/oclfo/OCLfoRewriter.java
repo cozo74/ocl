@@ -9,7 +9,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
         String className = visit(ctx.class_());
         String oclBool = visit(ctx.oclBool());
 
-        String result = " context " + className + " inv : " + oclBool + "; ";
+        String result = "context " + className + " inv : " + oclBool + "; ";
         System.out.println(result);
         return result;
     }
@@ -33,7 +33,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
                 result =  "( " + bool1 + " or " + bool2 + " ) and ( not " + bool1 + " or not " + bool2 + " ) ";
                 break;
             case "and":
-                result =  "(" + bool1 + " || " + bool2 + " ) ";
+                result = " " +  bool1 + " and " + bool2 + " ";
                 break;
             default:
                 result =  "error";
@@ -210,7 +210,6 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
     public String visitIsUnique(OCLfoParser.IsUniqueContext ctx) {
         String set = visit(ctx.oclSet());
         String attr = visit(ctx.attr());
-
 
         String result = " " + set + "->forAll(v1, v2 | not v1 = v2 implies not v1." + attr + " = v2." + attr + " ) ";
 
@@ -543,7 +542,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String oclObject = visit(ctx.oclObject());
 
-        String result = " " + oclObject + " ";
+        String result = oclObject ;
         return result;
     }
 
@@ -553,7 +552,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String oclValue = visit(ctx.oclValue());
 
-        String result = " " + oclValue + " ";
+        String result = oclValue;
         return result;
     }
 
@@ -597,7 +596,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
         String var = visit(ctx.var());
 
-        String result = " " + var + " " ;
+        String result = var;
         return result;
     }
 
@@ -656,6 +655,8 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
         return result;
     }
 
+
+    // Methods below only return original text
 
     @Override
     public String visitAnd(OCLfoParser.AndContext ctx) {
@@ -812,6 +813,14 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
 
     @Override
     public String visitNfRoleID(OCLfoParser.NfRoleIDContext ctx) {
+
+        String result = ctx.getText();
+        return result;
+    }
+
+
+    @Override
+    public String visitAttrID(OCLfoParser.AttrIDContext ctx) {
 
         String result = ctx.getText();
         return result;
