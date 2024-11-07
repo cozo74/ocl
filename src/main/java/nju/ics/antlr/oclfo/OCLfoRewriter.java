@@ -153,7 +153,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
     @Override
     public String visitSize(OCLfoParser.SizeContext ctx) {
         String set = visit(ctx.oclSet());
-        String op = visit(ctx.oclSet());
+        String op = visit(ctx.compOp());
         int size = Integer.parseInt(ctx.INT().getText());
 
         String forAll_n__1 = " " + set + "->forAll(e1, ..., e" + (size-1) + " | e1=e2 or e1=e3 or ... or e" + (size-2) + "=e" + (size-1) + " ) ";
@@ -161,6 +161,7 @@ public class OCLfoRewriter extends OCLfoBaseVisitor<String>{
         String forAll_n_1 = " " + set + "->forAll(e1, ..., e" + (size+1) + " | e1=e2 or e1=e3 or ... or e" + (size) + "=e" + (size+1) + " ) ";
 
         String result;
+        System.out.println(op);
 
         switch (op) {
             case "<":
