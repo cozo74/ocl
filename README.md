@@ -16,3 +16,5 @@
 3. Fig.6 中OCL-Bool的第1条规则（OCL-Bool or OCL-Bool）的rewrite规则会出现逻辑表达式中的括号符号，而Fig.4中没有定义括号规则，因此，本工作在OCL-Bool的产生式中增加了括号规则 '(' oclBool ')'    
 4. Fig.6 中OCL-Bool的第8条规则（涉及exist变换为forall）等价关系错误，存在为真<->不是所有为假（文中为不是所有为真），本工作进行了修改
 5. Fig.6 中OCL-Bool的13，14行右侧中的size（）没有展开，本工作将其展开为最终形式，->one()转换为size()<=1 and not ->isEmpty()
+6. Fig.6 中变换规则不完全，如OCL-Set->isUnique(attr) 重写后的结果仍然包含implies
+7. Fig.6 中关于size(), v.oclIsTypeOf(Class) 的规则变换后的形式如何实现？
