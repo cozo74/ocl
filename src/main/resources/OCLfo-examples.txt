@@ -1,7 +1,5 @@
 context Car inv : Car.allInstances()->isEmpty();
 context Car inv : Car.allInstances()->isEmpty() or Car.name = null;
 context Car inv : Car.allInstances()->isUnique(name);
-
-
 context Car inv : Car.allInstances()->includesAll(Car.allInstances()->select(c|c.isTruck));
 context Car inv : Car.allInstances()->size()>10;
